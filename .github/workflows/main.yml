@@ -33,11 +33,3 @@ jobs:
       - name: Apply Terraform changes
         run: terraform apply -auto-approve tfplan
 
-      - name: Show Terraform outputs
-        run: terraform output  # Display outputs after successful apply
-
-      - name: Clean up Terraform files
-        run: rm -rf .terraform* tfplan*
-
-      # Optional: Additional steps can be added for testing, deploying, or other tasks
-
