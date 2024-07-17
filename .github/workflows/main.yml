@@ -1,0 +1,43 @@
+name: Terraform AWS Workflow
+
+on:
+  push:
+    branches:
+      - main  
+  pull_request:
+    branches:
+      - main  
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest  
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.0.2  # Replace with the version of Terraform you're using
+          
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Validate Terraform configuration
+        run: terraform validate
+
+      - name: Plan Terraform changes
+        run: terraform plan -out=tfplan
+
+      - name: Apply Terraform changes
+        run: terraform apply -auto-approve tfplan
+
+      - name: Show Terraform outputs
+        run: terraform output  # Display outputs after successful apply
+
+      - name: Clean up Terraform files
+        run: rm -rf .terraform* tfplan*
+
+      # Optional: Additional steps can be added for testing, deploying, or other tasks
+
